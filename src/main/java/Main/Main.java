@@ -8,6 +8,7 @@ import fileUtils.ApacheFUDemo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
+import purchaseOrder.PurchaseOrder;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,6 +26,8 @@ public class Main {
         //log.info("Hash of file is: {}", file.getAbsolutePath()); //sha1Hash(file));
         //DOMparser.parse(file);
         //StAXparser.parse(file);
-        log.info("ORDER: {}", JAXB.getPurchaseOrder(file));
+        PurchaseOrder myPurchaseOrder = JAXB.getPurchaseOrder(file);
+        log.info("ORDER: {}", myPurchaseOrder);
+        log.info("XML: {}", JAXB.getXML(myPurchaseOrder));
     }
 }

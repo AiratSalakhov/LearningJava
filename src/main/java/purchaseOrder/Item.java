@@ -16,6 +16,8 @@ public class Item {
     public float price;
     @XmlElement(name = "ShipDate")
     public String shipDate;
+    @XmlElement(name = "Comment")
+    public String comment;
 
     public Item() {
     }
@@ -28,6 +30,7 @@ public class Item {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", shipDate='" + shipDate + '\'' +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 }
