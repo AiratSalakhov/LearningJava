@@ -1,9 +1,7 @@
 package Main;
 
 
-import XMLparsers.DOMparser;
 import XMLparsers.JAXB;
-import XMLparsers.StAXparser;
 import fileUtils.ApacheFUDemo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -29,5 +27,23 @@ public class Main {
         PurchaseOrder myPurchaseOrder = JAXB.getPurchaseOrder(file);
         log.info("ORDER: {}", myPurchaseOrder);
         log.info("XML: {}", JAXB.getXML(myPurchaseOrder));
+        myPurchaseOrder.items.stream()
+                .forEach((x) -> System.out.println(x));
+        System.out.println("=== sort by price ==========");
+        myPurchaseOrder.items.stream()
+                .sorted((a, b) -> (int) (a.price - b.price))
+                .forEach((x) -> System.out.println(x));
+        System.out.println("===filter by price gt 100 ==========");
+        myPurchaseOrder.items.stream()
+                .filter((x) -> x.price > 100.0)
+                .forEach((x) -> System.out.println(x));
+        System.out.println("== if price gt 100 set qty to 5 (map)===========");
+        myPurchaseOrder.items.stream()
+                .filter((x) -> x.price > 100.0)
+                .map(x -> {
+                    x.quantity = 5;
+                    return x;
+                })
+                .forEach((x) -> System.out.println(x));
     }
 }
