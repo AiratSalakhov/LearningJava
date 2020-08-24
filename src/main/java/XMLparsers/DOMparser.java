@@ -16,6 +16,7 @@ import java.io.IOException;
 @Slf4j
 public class DOMparser {
     public static void parse(File file) throws ParserConfigurationException, IOException, SAXException {
+        log.info("===== DOM parsing...");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(file);

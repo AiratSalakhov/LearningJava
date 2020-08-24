@@ -18,7 +18,7 @@ public class PurchaseOrder {
     @XmlElement(name = "DeliveryNotes")
     public String notes;
 
-    @XmlElementWrapper(name="Items", nillable = true)
+    @XmlElementWrapper(name = "Items", nillable = true)
     @XmlElement(name = "Item")
     public List<Item> items = new ArrayList<>();
 

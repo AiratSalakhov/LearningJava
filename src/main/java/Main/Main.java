@@ -1,8 +1,11 @@
 package Main;
 
 
+import XMLparsers.DOMparser;
 import XMLparsers.JAXB;
+import XMLparsers.StAXparser;
 import fileUtils.ApacheFUDemo;
+import fileUtils.SpringFUDemo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
@@ -20,30 +23,31 @@ public class Main {
         ApacheFUDemo.demo();
         File file = FileUtils.getFile(
                 Main.class.getClassLoader().getResource("order.xml").getPath());
-        log.info(file.getAbsolutePath());
-        //log.info("Hash of file is: {}", file.getAbsolutePath()); //sha1Hash(file));
-        //DOMparser.parse(file);
-        //StAXparser.parse(file);
+        log.info("===== Processing file {}", file.getAbsolutePath());
+        log.info("===== Hash of file {} is: {}", file.getName(), SpringFUDemo.getHash(file));
+        DOMparser.parse(file);
+        StAXparser.parse(file);
         PurchaseOrder myPurchaseOrder = JAXB.getPurchaseOrder(file);
-        log.info("ORDER: {}", myPurchaseOrder);
-        log.info("XML: {}", JAXB.getXML(myPurchaseOrder));
+        log.info("===== ORDER: {}", myPurchaseOrder);
+        log.info("===== XML: {}", JAXB.getXML(myPurchaseOrder));
+        log.info("===== Original items ==========");
         myPurchaseOrder.items.stream()
-                .forEach((x) -> System.out.println(x));
-        System.out.println("=== sort by price ==========");
+                .forEach((x) -> log.info(String.valueOf(x)));
+        log.info("===== Sort by price ==========");
         myPurchaseOrder.items.stream()
                 .sorted((a, b) -> (int) (a.price - b.price))
-                .forEach((x) -> System.out.println(x));
-        System.out.println("===filter by price gt 100 ==========");
+                .forEach((x) -> log.info(String.valueOf(x)));
+        log.info("===== Filter by price gt 100 ==========");
         myPurchaseOrder.items.stream()
                 .filter((x) -> x.price > 100.0)
-                .forEach((x) -> System.out.println(x));
-        System.out.println("== if price gt 100 set qty to 5 (map)===========");
+                .forEach((x) -> log.info(String.valueOf(x)));
+        log.info("===== If price gt 100 set qty to 5 (map)===========");
         myPurchaseOrder.items.stream()
                 .filter((x) -> x.price > 100.0)
                 .map(x -> {
                     x.quantity = 5;
                     return x;
                 })
-                .forEach((x) -> System.out.println(x));
+                .forEach((x) -> log.info(String.valueOf(x)));
     }
 }

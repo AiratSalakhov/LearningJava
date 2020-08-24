@@ -14,19 +14,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
-import java.util.jar.Attributes;
 
 @Slf4j
 public class StAXparser {
     public static void parse(File file) throws XMLStreamException, FileNotFoundException {
+        log.info("===== StAX parsing...");
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader eventReader =
                 factory.createXMLEventReader(new FileReader(file));
 
-        while(eventReader.hasNext()) {
+        while (eventReader.hasNext()) {
             XMLEvent event = eventReader.nextEvent();
 
-            switch(event.getEventType()) {
+            switch (event.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = event.asStartElement();
                     log.info("Element {}", startElement.getName().getLocalPart());
@@ -39,7 +39,7 @@ public class StAXparser {
                                 .append(attribute.getValue())
                                 .append("\" ");
                     }
-                    if (stringBuilder.length() > 0 ) {
+                    if (stringBuilder.length() > 0) {
                         log.info("Attributes: {}", stringBuilder.toString());
                     }
                     break;
