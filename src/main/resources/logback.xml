@@ -34,7 +34,7 @@
         <appender-ref ref="sout"/>
     </root>
     <!-- Логгер нашего класса  -->
-    <!--logger name="salakhov.lesson.Main" level="info" additivity="false">
+    <!--logger name="salakhov.lesson.com.ajrat.application" level="info" additivity="false">
         <appender-ref ref="sout"/>
     </logger-->
 </configuration>

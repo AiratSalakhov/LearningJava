@@ -1,4 +1,4 @@
-package XMLparsers;
+package com.ajrat.xml.parsers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
@@ -15,11 +15,26 @@ import java.io.IOException;
 
 @Slf4j
 public class DOMparser {
-    public static void parse(File file) throws ParserConfigurationException, IOException, SAXException {
+    public static void parse(File file) {
+        DocumentBuilder builder;
         log.info("===== DOM parsing...");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(file);
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            log.info("!!! ===== DOM parser ParserConfigurationException {}", e.getMessage());
+            return;
+        }
+        Document document;
+        try {
+            document = builder.parse(file);
+        } catch (SAXException e) {
+            log.info("!!! ===== DOM parser SAXException {}", e.getMessage());
+            return;
+        } catch (IOException e) {
+            log.info("!!! ===== DOM parser IOException {}", e.getMessage());
+            return;
+        }
         Node root = document.getDocumentElement();
         log.info("Root");
         getNodes(root);
